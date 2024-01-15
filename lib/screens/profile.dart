@@ -61,7 +61,7 @@ class _ProfileState extends State<Profile> {
     final provider = Provider.of<FavoriteProvider>(context);
     final menus = provider.menu;
 
-    return Column(
+    return ListView(
       children: [
         const SizedBox(height: 50.0),
         const Icon(
@@ -119,63 +119,97 @@ class _ProfileState extends State<Profile> {
         //
         const SizedBox(height: 20.0),
         //
-        Expanded(
-          child: ListView.builder(
-            itemCount: menus.length,
-            itemBuilder: (context, index) {
-              final menu = menus[index];
-              return Container(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    border:
-                        const Border(bottom: BorderSide(color: Colors.grey))),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Image.asset(
-                        'images/macam_pempek.jpg',
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              menu.name,
-                              style: const TextStyle(
-                                fontSize: 16.0,
+        Container(
+          height: 300,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: menus.isEmpty
+              ? const Center(child: Text('Belum ada Favorit'))
+              : ListView.builder(
+                  itemCount: menus.length,
+                  itemBuilder: (context, index) {
+                    final menu = menus[index];
+                    return Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          border: const Border(
+                              top: BorderSide(color: Colors.grey))),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Image.asset(
+                              menu.imageAsset,
+                              height: 100,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        menu.name,
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10.0),
+                                      Builder(builder: (context) {
+                                        if (menu.id.substring(0, 1) == '1') {
+                                          return const Text('Cabang Anugerah');
+                                        } else if (menu.id.substring(0, 1) ==
+                                            '2') {
+                                          return const Text('Cabang Polda');
+                                        } else if (menu.id.substring(0, 1) ==
+                                            '3') {
+                                          return const Text('Cabang Rajawali');
+                                        } else if (menu.id.substring(0, 1) ==
+                                            '4') {
+                                          return const Text('Cabang Kapten');
+                                        } else if (menu.id.substring(0, 1) ==
+                                            '5') {
+                                          return const Text('Cabang Sukarami');
+                                        } else if (menu.id.substring(0, 1) ==
+                                            '6') {
+                                          return const Text('Cabang Sukamto');
+                                        } else {
+                                          return const Text('Cabang Bandara');
+                                        }
+                                      })
+                                    ],
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      provider.toggleFavorite(menu);
+                                    },
+                                    icon: provider.isExist(menu)
+                                        ? const Icon(
+                                            Icons.favorite,
+                                            color: Colors.red,
+                                          )
+                                        : const Icon(Icons.favorite_border),
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 10.0),
-                            Text(menu.price.toString()),
-                            IconButton(
-                              onPressed: () {
-                                provider.toggleFavorite(menu);
-                              },
-                              icon: provider.isExist(menu)
-                                  ? const Icon(
-                                      Icons.favorite,
-                                      color: Colors.red,
-                                    )
-                                  : const Icon(Icons.favorite_border),
-                            ),
-                          ],
-                        ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
+                    );
+                  },
                 ),
-              );
-            },
-          ),
         )
       ],
     );

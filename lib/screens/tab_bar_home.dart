@@ -28,22 +28,13 @@ class TabBarHome extends StatelessWidget {
         bottomNavigationBar: Container(
           child: const TabBar(tabs: [
             Tab(
-              icon: Icon(
-                Icons.home,
-                color: Colors.deepPurple,
-              ),
+              icon: Icon(Icons.home),
             ),
             Tab(
-              icon: Icon(
-                Icons.bakery_dining_sharp,
-                color: Colors.deepPurple,
-              ),
+              icon: Icon(Icons.bakery_dining_sharp),
             ),
             Tab(
-              icon: Icon(
-                Icons.person,
-                color: Colors.deepPurple,
-              ),
+              icon: Icon(Icons.person),
             ),
           ]),
         ),

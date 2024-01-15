@@ -11,12 +11,14 @@ class BranchScreen extends StatefulWidget {
 }
 
 class _BranchScreenState extends State<BranchScreen> {
-  List<Branch> displayCabang = List.from(listBranch);
+  List<Branch> displayCabang = listBranch;
+
+  // update list setiap kali user menginput sesuatu di search bar
   void updateList(String value) {
     setState(() {
       displayCabang = listBranch
           .where((element) =>
-              element.name!.toLowerCase().contains(value.toLowerCase()))
+              element.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -38,7 +40,7 @@ class _BranchScreenState extends State<BranchScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onChanged: (value) => updateList(value),
+            onChanged: updateList,
           ),
         ),
         Expanded(
@@ -62,7 +64,14 @@ class _BranchScreenState extends State<BranchScreen> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Image.asset('images/macam_pempek.jpg'),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              displayCabang[index].imageAsset,
+                              height: 120,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                         Expanded(
                           flex: 2,
@@ -76,10 +85,17 @@ class _BranchScreenState extends State<BranchScreen> {
                                   displayCabang[index].name,
                                   style: const TextStyle(
                                     fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 10.0),
-                                Text(displayCabang[index].location),
+                                Text(
+                                  displayCabang[index].location,
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                    color: Colors.grey.shade500,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
