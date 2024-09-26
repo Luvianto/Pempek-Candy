@@ -1,3 +1,2 @@
 # pempek_candy
-
-A new Flutter project.
+Link github: https://github.com/Luvianto/Pempek-Candy
